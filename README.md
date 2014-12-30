@@ -8,7 +8,7 @@ A writable stream for updating reddit self threads.
 
 The constructor accepts the credentials as first argument, and either an options map, used to create a new self thread, or the id (or fullname) of an existing thread.
 
-Use `reddit.captchaUrl(callback)` or `reddit.captchaStream()` to get a captcha instance. The first method passes a possible error and an options map with the captcha url and id to given callback, while the second method returns a stream (with `id` and `url` properties) containing the actual captcha image.
+Use `reddit.captchaUrl(callback)` or `reddit.captchaStream()` to get a captcha instance. The first method passes a possible error and an options map with the captcha `id` and `url` to given callback, while the second method returns a stream (with `id` and `url` properties) containing the actual captcha image.
 
 ```javascript
 var reddit = require('reddit-thread-stream');
