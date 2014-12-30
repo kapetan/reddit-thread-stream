@@ -1,0 +1,39 @@
+{
+  "name": "reddit-thread-stream",
+  "version": "1.0.0",
+  "description": "Writable stream for updating reddit self threads",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kapetan/reddit-thread-stream"
+  },
+  "keywords": [
+    "reddit",
+    "create",
+    "update",
+    "self",
+    "thread",
+    "stream"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kapetan/reddit-thread-stream/issues"
+  },
+  "dependencies": {
+    "pump": "^1.0.0",
+    "redditor": "^1.1.0",
+    "thunky": "^0.1.0"
+  },
+  "devDependencies": {
+    "after-sequence": "^1.0.0",
+    "concat-stream": "^1.4.7",
+    "end-of-stream": "^1.1.0",
+    "nock": "^0.52.4",
+    "opn": "^1.0.1",
+    "promptly": "^0.2.0",
+    "tape": "^3.0.3"
+  }
+}
