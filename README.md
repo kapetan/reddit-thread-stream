@@ -48,3 +48,12 @@ var thread = reddit({
 
 thread.end('Third update');
 ```
+
+The `set` method can be used to provide thread options after the creation of an instance.
+
+```javascript
+var thread = reddit(credentials);
+
+// Call before the first write
+thread.set('t3_23l21y');
+```

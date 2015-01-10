@@ -29,12 +29,14 @@ var RedditThreadStream = function(credentials, thread) {
 	if(!(this instanceof RedditThreadStream)) return new RedditThreadStream(credentials, thread);
 	stream.Writable.call(this, { objectMode: true, highWaterMark: 16 });
 
+	this._thread = null;
+	this._id = null;
 	this._destroyed = false;
-	this._thread = thread;
-	this._id = id(thread);
 	this._login = thunky(function(callback) {
 		reddit(credentials, callback);
 	});
+
+	if(thread) this.set(thread);
 };
 
 util.inherits(RedditThreadStream, stream.Writable);
@@ -69,6 +71,11 @@ RedditThreadStream.captchaUrl = function(callback) {
 			id: id
 		});
 	});
+};
+
+RedditThreadStream.prototype.set = function(thread) {
+	this._thread = thread;
+	this._id = id(thread);
 };
 
 RedditThreadStream.prototype.destroy = function() {

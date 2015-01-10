@@ -54,7 +54,7 @@ if(env.REDDIT_USERNAME && env.REDDIT_PASSWORD) {
 			rem: true,
 			api_type: 'json'
 		}))
-		.times(2)
+		.times(3)
 		.reply(200, {
 			json: {
 				errors: [],
@@ -152,6 +152,45 @@ if(env.REDDIT_USERNAME && env.REDDIT_PASSWORD) {
 				]
 			}
 		}])
+		.post('/api/editusertext', qs.stringify({
+			thing_id: 't3_test_thread_id',
+			text: 'Hi again thread',
+			api_type: 'json'
+		}))
+		.reply(200, {
+			json: {
+				errors: [],
+				data: {
+					things: [
+						{
+							kind: 't3',
+							data: {
+								id: 't3_test_thread_id',
+								content: '<div>Hi again thread</div>'
+							}
+						}
+					]
+				}
+			}
+		})
+		.get('/r/funny/comments/test_thread_id/my_thread.json')
+		.reply(200, [{
+			kind: 'Listing',
+			data: {
+				modhash: 'test_modhash',
+				children: [
+					{
+						kind: 't3',
+						data: {
+							domain: 'self.funny',
+							subreddit: 'funny',
+							title: 'My thread',
+							selftext: 'Hi again thread'
+						}
+					}
+				]
+			}
+		}])
 		.get('/captcha/test_captcha_id')
 		.reply(200, function() {
 			return new Buffer(32);
@@ -230,6 +269,29 @@ test('create and update thread', function(t) {
 		selftext(id, function(err, text) {
 			t.notOk(err, errorMessage(err));
 			t.equal(text, 'Bye thread');
+
+			callback();
+		});
+	});
+
+	next(function(callback) {
+		var thread = reddit(user);
+
+		eos(thread, function(err) {
+			t.notOk(err, errorMessage(err));
+			callback();
+		});
+
+		setImmediate(function() {
+			thread.set(id);
+			thread.end('Hi again thread');
+		});
+	});
+
+	next(function(callback) {
+		selftext(id, function(err, text) {
+			t.notOk(err, errorMessage(err));
+			t.equal(text, 'Hi again thread');
 
 			callback();
 		});
